@@ -20,7 +20,13 @@ def get(event, context):
     response = {
         "statusCode": 200,
         "body": json.dumps(result['Item'],
-                           cls=decimalencoder.DecimalEncoder)
+                           cls=decimalencoder.DecimalEncoder),
+        "headers": {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT"
+        }
     }
 
     return response
