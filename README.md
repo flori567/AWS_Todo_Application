@@ -17,7 +17,7 @@ This example demonstrates how to setup a [RESTful Web Services](https://en.wikip
 
 This service has a separate directory for all the todo operations. For each operation exactly one file exists e.g. `todos/delete.py`. In each of these files there is exactly one function defined.
 
-The idea behind the `todos` directory is that in case you want to create a service containing multiple resources e.g. users, notes, comments you could do so in the same service. While this is certainly possible you might consider creating a separate service for each resource. It depends on the use-case and your preference.
+The serverless.yml file holds information about the necessary AWS Services for this Todo application. This file will be needed in order to deploy the AWS Services with the serverless framework as you can see in the Deploy section.
 
 ## Use-cases
 
@@ -25,6 +25,7 @@ The idea behind the `todos` directory is that in case you want to create a servi
 - API for a Mobile Application
 
 ## Setup
+First of all, you need to install the serverless framework in order to be able to deploy the AWS Services and AWS Lambda functions.
 
 ```bash
 npm install -g serverless
@@ -32,7 +33,7 @@ npm install -g serverless
 
 ## Deploy
 
-In order to deploy the endpoint simply run
+In order to deploy the endpoint, the DynamoDB and the API Gateway configuration simply run:
 
 ```bash
 serverless deploy
@@ -75,7 +76,7 @@ You can create, retrieve, update, or delete todos with the following commands:
 ### Create a Todo
 
 ```bash
-curl -X POST https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos --data '{ "text": "Learn Serverless" }'
+curl -X POST https://ejb4u226j9.execute-api.us-east-1.amazonaws.com/dev/todos --data '{ "text": "Learn Serverless" }'
 ```
 
 No output
@@ -83,63 +84,63 @@ No output
 ### List all Todos
 
 ```bash
-curl https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos
+curl https://ejb4u226j9.execute-api.us-east-1.amazonaws.com/dev/todos
 ```
+OR put the URL into your browser and see a list of all todos.
 
 Example output:
 ```bash
-[{"text":"Deploy my first service","id":"ac90feaa11e6-9ede-afdfa051af86","checked":true,"updatedAt":1479139961304},{"text":"Learn Serverless","id":"206793aa11e6-9ede-afdfa051af86","createdAt":1479139943241,"checked":false,"updatedAt":1479139943241}]%
+[
+  {
+    "checked": false,
+    "createdAt": "1611407938.0953338",
+    "text": "Learn Serverless",
+    "id": "8ce3de25-5d7d-11eb-8d09-773e4be3b1d2",
+    "updatedAt": "1611407938.0953338"
+  },
+  {
+    "checked": false,
+    "createdAt": "1611485758.2071009",
+    "text": "IT Methoden Trends Präsentation",
+    "id": "bd4cc309-5e32-11eb-9f47-4328a495d5f9",
+    "updatedAt": "1611485758.2071009"
+  }
+]
 ```
 
 ### Get one Todo
 
 ```bash
 # Replace the <id> part with a real id from your todos table
-curl https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos/<id>
+curl https://ejb4u226j9.execute-api.us-east-1.amazonaws.com/dev/todos/<id>
 ```
 
 Example Result:
 ```bash
-{"text":"Learn Serverless","id":"ee6490d0-aa11e6-9ede-afdfa051af86","createdAt":1479138570824,"checked":false,"updatedAt":1479138570824}%
+{"text":"Learn Serverless","id":"ee6490d0-aa11e6-9ede-afdfa051af86","createdAt":1479138570824,"checked":false,"updatedAt":1479138570824}
 ```
 
 ### Update a Todo
 
 ```bash
 # Replace the <id> part with a real id from your todos table
-curl -X PUT https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos/<id> --data '{ "text": "Learn Serverless", "checked": true }'
+curl -X PUT https://ejb4u226j9.execute-api.us-east-1.amazonaws.com/dev/todos/<id> --data '{ "text": "Learn Serverless", "checked": true }'
 ```
 
 Example Result:
 ```bash
-{"text":"Learn Serverless","id":"ee6490d0-aa11e6-9ede-afdfa051af86","createdAt":1479138570824,"checked":true,"updatedAt":1479138570824}%
+{"text":"Learn Serverless","id":"ee6490d0-aa11e6-9ede-afdfa051af86","createdAt":1479138570824,"checked":true,"updatedAt":1479138570824}
 ```
 
 ### Delete a Todo
 
 ```bash
 # Replace the <id> part with a real id from your todos table
-curl -X DELETE https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/todos/<id>
+curl -X DELETE https://ejb4u226j9.execute-api.us-east-1.amazonaws.com/dev/todos/<id>
 ```
 
 No output
 
-## Scaling
-
-### AWS Lambda
-
-By default, AWS Lambda limits the total concurrent executions across all functions within a given region to 100. The default limit is a safety limit that protects you from costs due to potential runaway or recursive functions during initial development and testing. To increase this limit above the default, follow the steps in [To request a limit increase for concurrent executions](http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html#increase-concurrent-executions-limit).
-
-### DynamoDB
-
-When you create a table, you specify how much provisioned throughput capacity you want to reserve for reads and writes. DynamoDB will reserve the necessary resources to meet your throughput needs while ensuring consistent, low-latency performance. You can change the provisioned throughput and increasing or decreasing capacity as needed.
-
-This is can be done via settings in the `serverless.yml`.
-
-```yaml
-  ProvisionedThroughput:
-    ReadCapacityUnits: 1
-    WriteCapacityUnits: 1
-```
-
-In case you expect a lot of traffic fluctuation we recommend to checkout this guide on how to auto scale DynamoDB [https://aws.amazon.com/blogs/aws/auto-scale-dynamodb-with-dynamic-dynamodb/](https://aws.amazon.com/blogs/aws/auto-scale-dynamodb-with-dynamic-dynamodb/)
+# Credits
+This project is adapted from the following GitHub repository: https://github.com/serverless/examples/tree/master/aws-python-rest-api-with-dynamodb
+The frontend was implemented all on my own. Moreover, some adjustments were necessary to the Python files. I could not access the Lambda function via the API because of the CORS policy. So I had to add some additional headers to the python responses.
