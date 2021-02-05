@@ -5,9 +5,6 @@ layout: Doc
 framework: v1
 platform: AWS
 language: Python
-authorLink: 'https://github.com/godfreyhobbs'
-authorName: 'Godfrey Hobbs'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/8434141?v=4&s=140'
 -->
 # Serverless REST API
 
