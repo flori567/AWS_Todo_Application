@@ -24,7 +24,7 @@ The serverless.yml file holds information about the necessary AWS Services for t
 - API for a Web Application
 - API for a Mobile Application
 
-## Setup
+## Backend Setup
 First of all, you need to install the serverless framework in order to be able to deploy the AWS Services and AWS Lambda functions.
 
 ```bash
@@ -140,6 +140,14 @@ curl -X DELETE https://ejb4u226j9.execute-api.us-east-1.amazonaws.com/dev/todos/
 ```
 
 No output
+
+# Frontend
+
+The frontend is implemented in plain javascript (frontend/app.js) with some HTML (frontend/index.html) and CSS (frontend/style.css)
+
+![Todo_Application_Frontend](Todo_Application_Frontend.png)
+
+If a new Todo is edited, the javascript will execute POST-Call to the REST endpoint mentioned above which will then execute the resprective Lambda function. 
 
 # Credits
 This project is adapted from the following GitHub repository: https://github.com/serverless/examples/tree/master/aws-python-rest-api-with-dynamodb
