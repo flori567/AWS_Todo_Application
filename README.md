@@ -14,6 +14,7 @@ authorAvatar: 'https://avatars1.githubusercontent.com/u/8434141?v=4&s=140'
 This example demonstrates how to setup a [RESTful Web Services](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services) allowing you to create, list, get, update and delete Todos. DynamoDB is used to store the data.
 The architecture of the Todo app is the following:
 
+![Todo_Application_Architecture](Todo_Application_Architecture.png)
 
 ## Structure
 
